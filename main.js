@@ -359,9 +359,43 @@ function showToast(message) {
     }, 3200);
 }
 
+let deferredInstallPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    showToast('أنتِ على وشك تثبيت التطبيق على الهاتف 📲');
+});
+
+window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    showToast('تم تثبيت التطبيق بنجاح على جهازك 🎉');
+});
+
+function installPwa() {
+    if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                showToast('تم تثبيت التطبيق بنجاح 🎉');
+            } else {
+                showToast('تم إلغاء تثبيت التطبيق');
+            }
+            deferredInstallPrompt = null;
+        });
+        return;
+    }
+
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+        showToast('التطبيق مفتوح بالفعل في وضع التطبيق ✅');
+        return;
+    }
+
+    showToast('افتح هذا الموقع من Chrome على الهاتف أو استخدم زر التثبيت في المتصفح إذا ظهر 📲');
+}
+
 function showInstallHint() {
-    const text = 'افتح الموقع من المتصفح ثم اضغط على زر التثبيت أو Add to Home Screen من القائمة، وستظهر لك الأيقونة على الشاشة الرئيسية 📲';
-    showToast(text);
+    installPwa();
 }
 
 if ('serviceWorker' in navigator) {

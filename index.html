@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#111827">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="حبنا">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="حبنا">
@@ -11,6 +13,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon.png">
+    <link rel="icon" href="icon.png">
 </head>
 <body>
     <div id="splashScreen" class="splash-screen">
@@ -78,7 +81,7 @@
             <div class="install-card-icon">📱</div>
             <h3>ثبّت التطبيق على هاتفك</h3>
             <p>استخدميه كصفحة أو تطبيق جميل على الشاشة الرئيسية مع الإشعارات والذكريات كلها في مكان واحد.</p>
-            <button class="install-card-btn" onclick="showInstallHint()">طريقة التثبيت</button>
+            <button class="install-card-btn" onclick="installPwa()">تثبيت التطبيق</button>
         </section>
 
         <!-- أزرار التنقل -->
