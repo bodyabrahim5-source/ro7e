@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111827">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="حبنا">
+    <title>مساحتنا الخاصة ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.png">
+</head>
+<body>
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-heart">💗</div>
+        <h1>مساحتنا الخاصة</h1>
+        <p>أهلاً بكِ في مكانانك الخاص بيكي يرحومي وبيتك الخاص❤️</p>
+        <div class="splash-loader">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <!-- 🎵 مشغل الصوت الخلفي -->
+    <div class="audio-control" onclick="toggleAudio()" title="تشغيل أو إيقاف الموسيقى">
+        <span id="audioIcon">🎵</span>
+        <audio id="bgMusic" loop preload="auto" playsinline src="song.mp4" type="video/mp4"></audio>
+    </div>
+
+    <!-- 🔒 شاشة القفل التفاعلية -->
+    <div id="lockScreen" class="lock-card">
+        <div class="heart-icon">🔐</div>
+        <h2>البوابة السرية</h2>
+        <p>ادخلي تاريخنا المميز للدخول ❤️</p>
+        <div class="input-group">
+            <input type="password" id="passInput" placeholder="دخلي عيد ميلادك يقمري" onkeypress="handlePassKey(event)">
+            <button onclick="checkPass()">دخول ✨</button>
+        </div>
+        <p id="errorMsg" class="error">الباسورد غير صحيح 💔 جربي تاني!</p>
+    </div>
+
+    <!-- 🏠 المحتوى الرئيسي التفاعلي -->
+    <main id="mainContent" class="hidden">
+        
+        <header class="hero">
+            <h1 class="glow-text">عالمنا الصغير ❤️</h1>
+            <p>مساحة خاصة بيكِ وبذكرياتنا الجميلة سوا</p>
+        </header>
+
+        <section class="note-card">
+            <div class="note-badge">💞 ملاحظة اليوم</div>
+            <p>كل لحظة معكِ تملأ قلبي بالهدوء والضحكة، وكأن كل يوم يصبح أجمل لأنكِ فيه.</p>
+        </section>
+
+        <section class="love-card">
+            <div class="love-card-icon">💌</div>
+            <h3>رسالة من قلبي إليكِ</h3>
+            <p>أنتِ أجمل ذكرى في كل يوم، وكل لحظة معاكِ تُصنع من الحب والضحكة والدفء.</p>
+            <button class="love-card-btn" onclick="showLoveMessage()">اقرئي رسالتي</button>
+        </section>
+
+        <section class="quote-card">
+            <div class="quote-icon">✨</div>
+            <h3>حكمة صغيرة من قلبي</h3>
+            <p id="quoteText">الحب لا يحتاج إلى كلمات كثيرة، فقط إلى قلبٍ يعرف كيف يختار.</p>
+            <button class="quote-btn" onclick="showRandomQuote()">اقرئي أخرى</button>
+        </section>
+
+        <section class="mini-card">
+            <div class="mini-card-icon">💘</div>
+            <h3>مفضّلتي اليوم</h3>
+            <p id="favoriteText">أحبكِ أكثر مما أستطيع أن أكتب، وأكثر مما أستطيع أن أُظهر.</p>
+            <button class="mini-card-btn" onclick="showFavoriteText()">تغيير</button>
+        </section>
+
+        <section class="install-card">
+            <div class="install-card-icon">📱</div>
+            <h3>ثبّت التطبيق على هاتفك</h3>
+            <p>استخدميه كصفحة أو تطبيق جميل على الشاشة الرئيسية مع الإشعارات والذكريات كلها في مكان واحد.</p>
+            <button class="install-card-btn" onclick="showInstallHint()">طريقة التثبيت</button>
+        </section>
+
+        <!-- أزرار التنقل -->
+        <nav class="nav-tabs">
+            <button id="tab-gallery" class="active" onclick="switchTab('gallery')">🖼️ ذكريات الشقة</button>
+            <button id="tab-chat" onclick="switchTab('chat')">🤖 شات الذكاء الاصطناعي</button>
+        </nav>
+
+        <!-- معرض الصور التفاعلي -->
+        <section id="gallerySection" class="tab-content active">
+            <h2>🏡 ذكرياتنا في الشقة</h2>
+            <div class="grid-container" id="galleryGrid"></div>
+        </section>
+
+        <!-- الشات التفاعلي -->
+        <section id="chatSection" class="tab-content hidden">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="status-dot"></div>
+                    <span>نسختك الرقمية مني 🤖❤️</span>
+                </div>
+                <div class="messages-area" id="chatMessages">
+                    <div class="msg bot">أهلاً يا حبيبتي! أنا هنا دايماً أكلمك لو مش موجود، اسأليني أي حاجة ✨</div>
+                </div>
+                <div id="typingIndicator" class="typing-indicator hidden">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="input-area">
+                    <input type="text" id="userInput" placeholder="اكتبي رسالتك هنا..." onkeypress="handleChatKey(event)">
+                    <button onclick="sendMessage()">إرسال 🚀</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="notificationToast" class="notification-toast hidden">
+        <div class="notification-icon">💖</div>
+        <div>
+            <div class="notification-title">رسالة جديدة</div>
+            <div class="notification-body" id="notificationBody"></div>
+        </div>
+    </div>
+
+    <!-- 🔍 نافذة عرض الصور بملء الشاشة (Lightbox) -->
+    <div id="lightbox" class="lightbox hidden" onclick="closeLightbox(event)">
+        <span class="close-btn" onclick="closeLightbox(force=true)">&times;</span>
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <img id="lightboxImg" src="" alt="ذكرى">
+            <p id="lightboxCaption"></p>
+            <button class="like-btn" onclick="toggleLike(this)">❤️ أحببت هذه الذكرى</button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
